@@ -7,10 +7,14 @@ import { io } from "./utils/index.js";
 
 const mongoDbUrl = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`;
 
-mongoose.set("strictQuery", true).connect(mongoDbUrl, (error) => {
-  if (error) throw error;
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(mongoDbUrl);
 
   server.listen(PORT, () => {
+    console.log("######################");
+    console.log(`Mongoose version: ${mongoose.version}`);
     console.log("######################");
     console.log("###### API REST ######");
     console.log("######################");
@@ -32,4 +36,4 @@ mongoose.set("strictQuery", true).connect(mongoDbUrl, (error) => {
       });
     });
   });
-});
+}
