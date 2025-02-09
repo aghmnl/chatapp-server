@@ -12,6 +12,8 @@ mongoose
   .then(() => {
     server.listen(PORT, () => {
       console.log("######################");
+      console.log(`Mongoose version: ${mongoose.version}`);
+      console.log("######################");
       console.log("###### API REST ######");
       console.log("######################");
       console.log(`http://${IP_SERVER}:${PORT}/api`);
