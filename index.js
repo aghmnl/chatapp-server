@@ -7,29 +7,30 @@ import { io } from "./utils/index.js";
 
 const mongoDbUrl = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/`;
 
-mongoose.set("strictQuery", true).connect(mongoDbUrl, (error) => {
-  if (error) throw error;
+mongoose
+  .connect(mongoDbUrl)
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log("######################");
+      console.log("###### API REST ######");
+      console.log("######################");
+      console.log(`http://${IP_SERVER}:${PORT}/api`);
 
-  server.listen(PORT, () => {
-    console.log("######################");
-    console.log("###### API REST ######");
-    console.log("######################");
-    console.log(`http://${IP_SERVER}:${PORT}/api`);
+      io.sockets.on("connection", (socket) => {
+        console.log("NUEVO USUARIO CONECTADO");
 
-    io.sockets.on("connection", (socket) => {
-      console.log("NUEVO USUARIO CONECTADO");
+        socket.on("disconnect", () => {
+          console.log("USUARIO DESCONECTADO");
+        });
 
-      socket.on("disconnect", () => {
-        console.log("USUARIO DESCONECTADO");
-      });
+        socket.on("subscribe", (room) => {
+          socket.join(room);
+        });
 
-      socket.on("subscribe", (room) => {
-        socket.join(room);
-      });
-
-      socket.on("unsubscribe", (room) => {
-        socket.leave(room);
+        socket.on("unsubscribe", (room) => {
+          socket.leave(room);
+        });
       });
     });
-  });
-});
+  })
+  .catch((error) => console.log(error));
