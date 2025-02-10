@@ -23,4 +23,8 @@ function register(req, res) {
   });
 }
 
-export const AuthController = { register };
+function login(req, res) {
+  res.status(200).send("Login OK");
+}
+
+export const AuthController = { register, login };
