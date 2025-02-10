@@ -7,7 +7,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js"
   },
   "dependencies": {
     "body-parser": "1.20.1",
@@ -17,5 +18,8 @@
     "morgan": "1.10.0",
     "socket.io": "4.5.4"
   },
-  "repository": "https://github.com/aghmnl/chatapp-server.git"
+  "repository": "https://github.com/aghmnl/chatapp-server.git",
+  "devDependencies": {
+    "nodemon": "2.0.20"
+  }
 }
