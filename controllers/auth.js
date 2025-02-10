@@ -24,7 +24,17 @@ function register(req, res) {
 }
 
 function login(req, res) {
-  res.status(200).send("Login OK");
+  const { email, password } = req.body;
+
+  const emailLowerCase = email.toLowerCase();
+
+  User.findOne({ email: emailLowerCase }, (error, userStorage) => {
+    if (error) {
+      res.status(500).send({ msg: "Error del servidor" });
+    } else {
+      res.status(200).send(userStorage);
+    }
+  });
 }
 
 export const AuthController = { register, login };
