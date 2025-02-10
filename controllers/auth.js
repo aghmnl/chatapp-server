@@ -1,5 +1,6 @@
 import bscrypt from "bcryptjs";
 import { User } from "../models/index.js";
+import { jwt } from "../utils/index.js";
 
 function register(req, res) {
   const { email, password } = req.body;
@@ -38,7 +39,10 @@ function login(req, res) {
         } else if (!check) {
           res.status(400).send({ msg: "Contraseña incorrecta" });
         } else {
-          res.status(200).send(userStorage);
+          res.status(200).send({
+            access: jwt.createAccessToken(userStorage),
+            refresh: "",
+          });
         }
       });
     }
