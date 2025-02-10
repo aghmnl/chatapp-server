@@ -1,3 +1,4 @@
+import bscrypt from "bcryptjs";
 import { User } from "../models/index.js";
 
 function register(req, res) {
@@ -7,6 +8,10 @@ function register(req, res) {
     email: email.toLowerCase(),
     password: password,
   });
+
+  const salt = bscrypt.genSaltSync(10);
+  const hashPassword = bscrypt.hashSync(password, salt);
+  user.password = hashPassword;
 
   user.save((error, userStorage) => {
     if (error) {
