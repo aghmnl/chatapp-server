@@ -29,7 +29,12 @@ function createRefreshToken(user) {
   return jsonwebtoken.sign(payload, JWT_SECRET_KEY);
 }
 
+function decoded(token) {
+  return jsonwebtoken.decode(token, JWT_SECRET_KEY, true);
+}
+
 export const jwt = {
   createAccessToken,
   createRefreshToken,
+  decoded,
 };
