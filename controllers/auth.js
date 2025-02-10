@@ -32,7 +32,15 @@ function login(req, res) {
     if (error) {
       res.status(500).send({ msg: "Error del servidor" });
     } else {
-      res.status(200).send(userStorage);
+      bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
+        if (bcryptError) {
+          res.status(500).send({ msg: "Error del servidor" });
+        } else if (!check) {
+          res.status(400).send({ msg: "Contraseña incorrecta" });
+        } else {
+          res.status(200).send(userStorage);
+        }
+      });
     }
   });
 }
