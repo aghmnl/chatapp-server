@@ -51,6 +51,8 @@ function login(req, res) {
 
 function refreshAccessToken(req, res) {
   res.status(200).send({ msg: "Todo OK" });
+  const { refreshToken } = req.body;
+  console.log(refreshToken);
 }
 
 export const AuthController = { register, login, refreshAccessToken };
