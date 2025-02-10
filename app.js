@@ -3,8 +3,8 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import http from "http";
 import morgan from "morgan";
-
 import { initSocketServer } from "./utils/index.js";
+import { authRoutes } from "./routes/index.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -23,5 +23,8 @@ app.use(cors());
 
 // Configure logger HTTP request
 app.use(morgan("dev"));
+
+// Configure routings
+app.use("/api", authRoutes);
 
 export { server };
