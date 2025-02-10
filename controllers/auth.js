@@ -49,4 +49,8 @@ function login(req, res) {
   });
 }
 
-export const AuthController = { register, login };
+function refreshAccessToken(req, res) {
+  res.status(200).send({ msg: "Todo OK" });
+}
+
+export const AuthController = { register, login, refreshAccessToken };
