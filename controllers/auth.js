@@ -50,9 +50,14 @@ function login(req, res) {
 }
 
 function refreshAccessToken(req, res) {
-  res.status(200).send({ msg: "Todo OK" });
   const { refreshToken } = req.body;
   console.log(refreshToken);
+  if (!refreshToken) {
+    res.status(400).send({ msg: "Token requerido" });
+  } else {
+    res.status(200).send({ msg: "Todo OK" });
+    const hasExpired = jwt.hasExpiredToken(refreshToken);
+  }
 }
 
 export const AuthController = { register, login, refreshAccessToken };

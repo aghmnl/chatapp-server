@@ -33,8 +33,14 @@ function decoded(token) {
   return jsonwebtoken.decode(token, JWT_SECRET_KEY, true);
 }
 
+function hasExpiredToken(token) {
+  const demo = decoded(token);
+  console.log(demo);
+}
+
 export const jwt = {
   createAccessToken,
   createRefreshToken,
   decoded,
+  hasExpiredToken,
 };
