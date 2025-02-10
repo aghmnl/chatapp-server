@@ -15,6 +15,21 @@ function createAccessToken(user) {
   return jsonwebtoken.sign(payload, JWT_SECRET_KEY);
 }
 
+function createRefreshToken(user) {
+  const expToken = new Date();
+  expToken.setMonth(expToken.getMonth() + 1);
+
+  const payload = {
+    token_type: "refresh",
+    user_id: user._id,
+    iat: Date.now(),
+    exp: expToken.getTime(),
+  };
+
+  return jsonwebtoken.sign(payload, JWT_SECRET_KEY);
+}
+
 export const jwt = {
   createAccessToken,
+  createRefreshToken,
 };

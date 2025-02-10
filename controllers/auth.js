@@ -41,7 +41,7 @@ function login(req, res) {
         } else {
           res.status(200).send({
             access: jwt.createAccessToken(userStorage),
-            refresh: "",
+            refresh: jwt.createRefreshToken(userStorage),
           });
         }
       });
