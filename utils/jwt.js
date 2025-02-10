@@ -34,8 +34,14 @@ function decoded(token) {
 }
 
 function hasExpiredToken(token) {
-  const demo = decoded(token);
-  console.log(demo);
+  const { exp } = decoded(token);
+  const currentDate = new Date().getTime();
+
+  if (exp <= currentDate) {
+    return true;
+  }
+
+  return false;
 }
 
 export const jwt = {
