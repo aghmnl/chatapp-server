@@ -49,6 +49,11 @@ async function getUser(req, res) {
 
 async function updateUser(req, res) {
   res.status(200).send("OK");
+
+  const userData = req.body;
+
+  console.log(userData);
+  console.log(req.files);
 }
 
 export const UserController = { getMe, getUsers, getUser, updateUser };
