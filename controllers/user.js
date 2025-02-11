@@ -49,12 +49,21 @@ async function getUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  res.status(200).send("OK");
+  const { user_id } = req.user;
+  const userData = req.body;
 
   if (req.files.avatar) {
     const imagePath = getFilePath(req.files.avatar);
-    console.log(imagePath);
+    userData.avatar = imagePath;
   }
+
+  User.findByIdAndUpdate({ _id: user_id }, userData, (error) => {
+    if (error) {
+      res.status(400).send({ msg: "Error al actualizar el usuario" });
+    } else {
+      res.status(200).send(userData);
+    }
+  });
 }
 
 export const UserController = { getMe, getUsers, getUser, updateUser };
