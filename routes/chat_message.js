@@ -8,5 +8,6 @@ const api = express.Router();
 
 api.post("/chat/message", [mdAuth.asureAuth], ChatMessageController.sendText);
 api.post("/chat/message/image", [mdAuth.asureAuth, mdUpload], ChatMessageController.sendImage);
+api.get("/chat/message/:chat_id", [mdAuth.asureAuth], ChatMessageController.getAll);
 
 export const chatMessageRoutes = api;
