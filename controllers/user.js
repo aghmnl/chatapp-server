@@ -16,4 +16,8 @@ async function getMe(req, res) {
   }
 }
 
-export const UserController = { getMe };
+async function getUsers(req, res) {
+  res.status(200).send("Usuarios...");
+}
+
+export const UserController = { getMe, getUsers };
