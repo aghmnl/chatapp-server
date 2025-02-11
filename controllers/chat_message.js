@@ -75,8 +75,8 @@ async function getLastMessage(req, res) {
   const { chat_id } = req.params;
 
   try {
-    const response = await ChatMessage.findOne({ chat: chat_id }).sort({ createdAt: -1 });
-    res.status(200).send(response || {});
+    const lastMessage = await ChatMessage.findOne({ chat: chat_id }).sort({ createdAt: -1 });
+    res.status(200).send(lastMessage || {});
   } catch (error) {
     res.status(500).send({ msg: "Error del servidor" });
   }
