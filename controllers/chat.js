@@ -35,16 +35,17 @@ async function create(req, res) {
 async function getAll(req, res) {
   const { user_id } = req.user;
 
-  console.log(user_id);
-
   Chat.find({
     $or: [{ participant_one: user_id }, { participant_two: user_id }],
-  }).exec(async (error, chats) => {
-    if (error) {
-      return res.status(400).send({ msg: "Error al obtener los chats" });
-    }
-    res.status(200).send(chats);
-  });
+  })
+    .populate("participant_one")
+    .populate("participant_two")
+    .exec(async (error, chats) => {
+      if (error) {
+        return res.status(400).send({ msg: "Error al obtener los chats" });
+      }
+      res.status(200).send(chats);
+    });
 }
 
 export const ChatController = { create, getAll };
