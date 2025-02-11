@@ -38,8 +38,8 @@ async function getAll(req, res) {
   Chat.find({
     $or: [{ participant_one: user_id }, { participant_two: user_id }],
   })
-    .populate("participant_one")
-    .populate("participant_two")
+    .populate("participant_one", "-password")
+    .populate("participant_two", "-password")
     .exec(async (error, chats) => {
       if (error) {
         return res.status(400).send({ msg: "Error al obtener los chats" });
@@ -60,4 +60,18 @@ async function deleteChat(req, res) {
   });
 }
 
-export const ChatController = { create, getAll, deleteChat };
+async function getChat(req, res) {
+  const chat_id = req.params.id;
+
+  Chat.findById(chat_id, (error, chatStorage) => {
+    if (error) {
+      res.status(400).send({ msg: "Error al obtener el chat" });
+    } else {
+      res.status(200).send(chatStorage);
+    }
+  })
+    .populate("participant_one", "-password")
+    .populate("participant_two", "-password");
+}
+
+export const ChatController = { create, getAll, deleteChat, getChat };
