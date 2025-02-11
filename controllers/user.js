@@ -17,7 +17,17 @@ async function getMe(req, res) {
 }
 
 async function getUsers(req, res) {
-  res.status(200).send("Usuarios...");
+  try {
+    const users = await User.find().select(["-password"]);
+
+    if (!users) {
+      res.status(400).send({ msg: "No se han encontardo usuarios" });
+    } else {
+      res.status(200).send(users);
+    }
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
 }
 
 export const UserController = { getMe, getUsers };
