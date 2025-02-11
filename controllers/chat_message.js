@@ -60,4 +60,15 @@ async function getAll(req, res) {
   }
 }
 
-export const ChatMessageController = { sendText, sendImage, getAll };
+async function getTotalMessages(req, res) {
+  const { chat_id } = req.params;
+
+  try {
+    const response = await ChatMessage.find({ chat: chat_id }).count();
+    res.status(200).send(JSON.stringify(response));
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
+export const ChatMessageController = { sendText, sendImage, getAll, getTotalMessages };
