@@ -1,3 +1,7 @@
 import {} from "../models/index.js";
 
-export const ChatController = {};
+async function create(req, res) {
+  res.status(200).send("Creación OK");
+}
+
+export const ChatController = { create };
