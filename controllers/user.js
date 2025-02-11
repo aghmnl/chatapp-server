@@ -31,4 +31,21 @@ async function getUsers(req, res) {
   }
 }
 
-export const UserController = { getMe, getUsers };
+async function getUser(req, res) {
+  res.status(200).send("OK");
+  // const { id } = req.params;
+
+  // try {
+  //   const response = await User.findById(id).select(["-password"]);
+
+  //   if (!response) {
+  //     res.status(400).send({ msg: "No se ha encontrado el usuario" });
+  //   } else {
+  //     res.status(200).send(response);
+  //   }
+  // } catch (error) {
+  //   res.status(500).send({ msg: "Error del servidor" });
+  // }
+}
+
+export const UserController = { getMe, getUsers, getUser };
