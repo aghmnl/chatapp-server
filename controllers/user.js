@@ -1,4 +1,5 @@
 import { User } from "../models/index.js";
+import { getFilePath } from "../utils/index.js";
 
 async function getMe(req, res) {
   const { user_id } = req.user;
@@ -50,10 +51,10 @@ async function getUser(req, res) {
 async function updateUser(req, res) {
   res.status(200).send("OK");
 
-  const userData = req.body;
-
-  console.log(userData);
-  console.log(req.files);
+  if (req.files.avatar) {
+    const imagePath = getFilePath(req.files.avatar);
+    console.log(imagePath);
+  }
 }
 
 export const UserController = { getMe, getUsers, getUser, updateUser };
