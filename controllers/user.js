@@ -18,7 +18,8 @@ async function getMe(req, res) {
 
 async function getUsers(req, res) {
   try {
-    const users = await User.find().select(["-password"]);
+    const { user_id } = req.user;
+    const users = await User.find({ _id: { $ne: user_id } }).select(["-password"]);
 
     if (!users) {
       res.status(400).send({ msg: "No se han encontardo usuarios" });
