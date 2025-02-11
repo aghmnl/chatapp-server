@@ -32,4 +32,8 @@ async function create(req, res) {
   });
 }
 
-export const ChatController = { create };
+async function getAll(req, res) {
+  res.status(200).send("OK");
+}
+
+export const ChatController = { create, getAll };
