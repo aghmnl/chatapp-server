@@ -1,13 +1,6 @@
 import { jwt } from "../utils/index.js";
 
 function asureAuth(req, res, next) {
-  console.log("#########");
-  console.log("#########");
-  console.log("DATOS DE LOS HEADERS");
-  console.log(req.headers);
-  console.log("#########");
-  console.log("#########");
-
   if (!req.headers.authorization) {
     return res.status(403).send({ msg: "La petición no tiene la cabecera de autenticación" });
   }
