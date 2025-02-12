@@ -5,7 +5,7 @@ async function getMe(req, res) {
   const { user_id } = req.user;
 
   try {
-    const response = await User.findById(user_id).select(["-password"]);
+    const response = await User.findById(user_id).select(["-password -__v"]);
 
     if (!response) {
       res.status(400).send({ msg: "No se ha encontrado el usuario" });
@@ -20,7 +20,7 @@ async function getMe(req, res) {
 async function getUsers(req, res) {
   try {
     const { user_id } = req.user;
-    const users = await User.find({ _id: { $ne: user_id } }).select(["-password"]);
+    const users = await User.find({ _id: { $ne: user_id } }).select(["-password -__v"]);
 
     if (!users) {
       res.status(400).send({ msg: "No se han encontardo usuarios" });
@@ -36,7 +36,7 @@ async function getUser(req, res) {
   const { id } = req.params;
 
   try {
-    const user = await User.findById(id).select(["-password"]);
+    const user = await User.findById(id).select(["-password -__v"]);
 
     if (!user) {
       res.status(400).send({ msg: "No se ha encontrado el usuario" });

@@ -30,8 +30,8 @@ function getAll(req, res) {
   const { user_id } = req.user;
 
   Group.find({ participants: user_id })
-    .populate("creator", "-password")
-    .populate("participants", "-password")
+    .populate("creator", "-password -__v")
+    .populate("participants", "-password -__v")
     .exec(async (error, groups) => {
       if (error) {
         res.status(500).send({ msg: "Error al obtener los grupos" });
@@ -40,4 +40,18 @@ function getAll(req, res) {
     });
 }
 
-export const GroupController = { create, getAll };
+function getGroup(req, res) {
+  const group_id = req.params.id;
+
+  Group.findById(group_id, (error, groupStorage) => {
+    if (error) {
+      res.status(500).send({ msg: "Error del servidor" });
+    } else if (!groupStorage) {
+      res.status(400).send({ msg: "No se ha encontrado el grupo" });
+    } else {
+      res.status(200).send(groupStorage);
+    }
+  }).populate("participants", "-password -__v");
+}
+
+export const GroupController = { create, getAll, getGroup };
