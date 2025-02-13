@@ -47,4 +47,18 @@ function sendImage(req, res) {
   });
 }
 
-export const GroupMessageController = { sendText, sendImage };
+async function getAll(req, res) {
+  const { group_id } = req.params;
+
+  try {
+    const messages = await GroupMessage.find({ group: group_id }).sort({ createdAt: 1 }).populate("user");
+
+    const total = await GroupMessage.find({ group: group_id }).count();
+
+    res.status(200).send({ messages, total });
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
+export const GroupMessageController = { sendText, sendImage, getAll };
