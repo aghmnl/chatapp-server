@@ -51,7 +51,7 @@ async function getAll(req, res) {
   const { chat_id } = req.params;
 
   try {
-    const messages = await ChatMessage.find({ chat: chat_id }).sort({ createdAt: 1 }).populate("user", "-password");
+    const messages = await ChatMessage.find({ chat: chat_id }).sort({ createdAt: 1 }).populate("user", "-password -__v").select("-__v");
     const total = await ChatMessage.find({ chat: chat_id }).count();
 
     res.status(200).send({ messages, total });
@@ -75,7 +75,7 @@ async function getLastMessage(req, res) {
   const { chat_id } = req.params;
 
   try {
-    const lastMessage = await ChatMessage.findOne({ chat: chat_id }).sort({ createdAt: -1 });
+    const lastMessage = await ChatMessage.findOne({ chat: chat_id }).sort({ createdAt: -1 }).select("-__v");
     res.status(200).send(lastMessage || {});
   } catch (error) {
     res.status(500).send({ msg: "Error del servidor" });

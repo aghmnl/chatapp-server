@@ -51,7 +51,9 @@ function getGroup(req, res) {
     } else {
       res.status(200).send(groupStorage);
     }
-  }).populate("participants", "-password -__v");
+  })
+    .populate("participants", "-password -__v")
+    .select("-__v");
 }
 
 async function updateGroup(req, res) {
@@ -76,4 +78,22 @@ async function updateGroup(req, res) {
   });
 }
 
-export const GroupController = { create, getAll, getGroup, updateGroup };
+async function exitGroup(req, res) {
+  const { id } = req.params;
+  const { user_id } = req.user;
+
+  const group = await Group.findById(id);
+
+  const newParticipants = group.participants.filter((participant) => participant.toString() !== user_id);
+
+  const newData = {
+    ...group._doc,
+    participants: newParticipants,
+  };
+
+  await Group.findByIdAndUpdate(id, newData);
+
+  res.status(200).send({ msg: "Salida exitosa" });
+}
+
+export const GroupController = { create, getAll, getGroup, updateGroup, exitGroup };

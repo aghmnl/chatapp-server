@@ -40,6 +40,7 @@ async function getAll(req, res) {
   })
     .populate("participant_one", "-password -__v")
     .populate("participant_two", "-password -__v")
+    .select("-__v")
     .exec(async (error, chats) => {
       if (error) {
         return res.status(400).send({ msg: "Error al obtener los chats" });
@@ -84,7 +85,8 @@ async function getChat(req, res) {
     }
   })
     .populate("participant_one", "-password -__v")
-    .populate("participant_two", "-password -__v");
+    .populate("participant_two", "-password -__v")
+    .select("-__v");
 }
 
 export const ChatController = { create, getAll, deleteChat, getChat };
