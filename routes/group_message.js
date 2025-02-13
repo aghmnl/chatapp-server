@@ -8,5 +8,6 @@ const mdUpload = multiparty({ uploadDir: "./uploads/images" });
 const api = express.Router();
 
 api.post("/group/message", [mdAuth.asureAuth], GroupMessageController.sendText);
+api.post("/group/message/image", [mdAuth.asureAuth, mdUpload], GroupMessageController.sendImage);
 
 export const groupMessageRoutes = api;
