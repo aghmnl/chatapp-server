@@ -12,5 +12,6 @@ api.get("/group", [mdAuth.asureAuth], GroupController.getAll);
 api.get("/group/:id", [mdAuth.asureAuth], GroupController.getGroup);
 api.patch("/group/:id", [mdAuth.asureAuth, mdUpload], GroupController.updateGroup);
 api.patch("/group/exit/:id", [mdAuth.asureAuth], GroupController.exitGroup);
+api.patch("/group/add_participants/:id", [mdAuth.asureAuth], GroupController.addParticipants);
 
 export const groupRoutes = api;
