@@ -54,4 +54,26 @@ function getGroup(req, res) {
   }).populate("participants", "-password -__v");
 }
 
-export const GroupController = { create, getAll, getGroup };
+async function updateGroup(req, res) {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const group = await Group.findById(id);
+
+  if (name) group.name = name;
+
+  if (req.files.image) {
+    const imagePath = getFilePath(req.files.image);
+    group.image = imagePath;
+  }
+
+  Group.findByIdAndUpdate(id, group, (error) => {
+    if (error) {
+      res.status(500).send({ msg: "Error del servidor" });
+    } else {
+      res.status(200).send({ image: group.image, name: group.name });
+    }
+  });
+}
+
+export const GroupController = { create, getAll, getGroup, updateGroup };
