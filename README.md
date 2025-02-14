@@ -20,8 +20,6 @@ Para correr el servidor se debe hacer dentro de la carpeta recién creada:
 yarn dev
 ```
 
-Las versiones se pueden ver en: [npm npx create-expo-app](https://www.npmjs.com/package/create-expo-app/v/1.1.5?activeTab=versions)
-
 ### Github branches
 
 Hay dos Pull Requests abiertos correspondientes a dos ramas disponibles hechas por mí. Ambas resuelven el problema de actualizar mongoose a la versión 8.10.0. Versiones superiores a la utilizada en el curso (6.8.0) no aceptan callbacks:
