@@ -61,4 +61,15 @@ async function getAll(req, res) {
   }
 }
 
-export const GroupMessageController = { sendText, sendImage, getAll };
+async function getTotalMessages(req, res) {
+  const { group_id } = req.params;
+
+  try {
+    const total = await GroupMessage.find({ group: group_id }).count();
+    res.status(200).send(JSON.stringify(total));
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
+export const GroupMessageController = { sendText, sendImage, getAll, getTotalMessages };

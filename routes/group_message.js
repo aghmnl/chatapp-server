@@ -10,5 +10,6 @@ const api = express.Router();
 api.post("/group/message", [mdAuth.asureAuth], GroupMessageController.sendText);
 api.post("/group/message/image", [mdAuth.asureAuth, mdUpload], GroupMessageController.sendImage);
 api.get("/group/message/:group_id", [mdAuth.asureAuth], GroupMessageController.getAll);
+api.get("/group/message/total/:group_id", [mdAuth.asureAuth], GroupMessageController.getTotalMessages);
 
 export const groupMessageRoutes = api;
