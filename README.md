@@ -6,6 +6,10 @@
 
 Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp/tree/main) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
 
+### Cómo correr el servidor
+
+Una vez clonado localmente con `git clone https://github.com/aghmnl/chatapp-server.git` para correr el servidor se debe hacer `yarn dev`.
+
 ### Github branches
 
 Hay dos Pull Requests abiertos correspondientes a dos ramas disponibles hechas por mí. Ambas resuelven el problema de actualizar mongoose a la versión 8.10.0. Versiones superiores a la utilizada en el curso (6.8.0) no aceptan callbacks:
