@@ -14,13 +14,14 @@ function register(req, res) {
   const hashPassword = bscrypt.hashSync(password, salt);
   user.password = hashPassword;
 
-  user.save((error, userStorage) => {
-    if (error) {
-      res.status(400).send({ msg: "Error al registrar el usuario" });
-    } else {
+  user
+    .save()
+    .then((userStorage) => {
       res.status(201).send(userStorage);
-    }
-  });
+    })
+    .catch(() => {
+      res.status(400).send({ msg: "Error al registrar el usuario" });
+    });
 }
 
 function login(req, res) {
