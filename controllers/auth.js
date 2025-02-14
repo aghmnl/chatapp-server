@@ -2,7 +2,7 @@ import bscrypt from "bcryptjs";
 import { User } from "../models/index.js";
 import { jwt } from "../utils/index.js";
 
-function register(req, res) {
+async function register(req, res) {
   const { email, password } = req.body;
 
   const user = new User({
@@ -14,13 +14,12 @@ function register(req, res) {
   const hashPassword = bscrypt.hashSync(password, salt);
   user.password = hashPassword;
 
-  user.save((error, userStorage) => {
-    if (error) {
-      res.status(400).send({ msg: "Error al registrar el usuario" });
-    } else {
-      res.status(201).send(userStorage);
-    }
-  });
+  try {
+    const userStorage = await user.save();
+    res.status(201).send(userStorage);
+  } catch (error) {
+    res.status(400).send({ msg: "Error al registrar el usuario" });
+  }
 }
 
 async function login(req, res) {
