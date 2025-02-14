@@ -72,4 +72,16 @@ async function getTotalMessages(req, res) {
   }
 }
 
-export const GroupMessageController = { sendText, sendImage, getAll, getTotalMessages };
+async function getLastMessage(req, res) {
+  const { group_id } = req.params;
+
+  try {
+    const response = await GroupMessage.findOne({ group: group_id }).sort({ createdAt: -1 }).populate("user");
+
+    res.status(200).send(response || {});
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
+export const GroupMessageController = { sendText, sendImage, getAll, getTotalMessages, getLastMessage };
