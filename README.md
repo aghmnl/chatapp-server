@@ -6,9 +6,29 @@
 
 Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp/tree/main) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
 
+### create-expo-app
+
+La versión que se usa en el curso claramente no es la última (3.2.0 al escribir este readme). A tal punto que la última usa Typescript en vez de Javascript. Por eso el comando utlizado para la instalación en mi caso fue:
+
+```
+npx create-expo-app@2.3.0 server
+```
+
 ### Cómo correr el servidor
 
-Una vez clonado localmente con `git clone https://github.com/aghmnl/chatapp-server.git` para correr el servidor se debe hacer `yarn dev`.
+Una vez clonado localmente con:
+
+```
+git clone https://github.com/aghmnl/chatapp-server.git
+```
+
+Para correr el servidor se debe hacer:
+
+```
+yarn dev
+```
+
+Las versiones se pueden ver en: [npm npx create-expo-app](https://www.npmjs.com/package/create-expo-app/v/1.1.5?activeTab=versions)
 
 ### Github branches
 
@@ -21,7 +41,7 @@ Hay dos Pull Requests abiertos correspondientes a dos ramas disponibles hechas p
 
 Ya que el curso no está actualizado, me tomé el esfuerzo de anotar todas las dependencias utilizadas con las versiones correspondientes para evitar problemas de compatibilidades
 
-- npm 8.5.5 (no lo usa pero es la versión que tengo compatible)
+- npm 8.5.5
 - node 18.12.1
 - yarn 1.22.19
 - create-expo-app Creo que usa una versión cercana a la 2.3.0
