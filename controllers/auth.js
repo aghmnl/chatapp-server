@@ -23,29 +23,29 @@ function register(req, res) {
   });
 }
 
-function login(req, res) {
+async function login(req, res) {
   const { email, password } = req.body;
 
   const emailLowerCase = email.toLowerCase();
 
-  User.findOne({ email: emailLowerCase }, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
-      bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
-        if (bcryptError) {
-          res.status(500).send({ msg: "Error del servidor" });
-        } else if (!check) {
-          res.status(400).send({ msg: "Contraseña incorrecta" });
-        } else {
-          res.status(200).send({
-            access: jwt.createAccessToken(userStorage),
-            refresh: jwt.createRefreshToken(userStorage),
-          });
-        }
-      });
-    }
-  });
+  try {
+    const userStorage = await User.findOne({ email: emailLowerCase });
+
+    bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
+      if (bcryptError) {
+        res.status(500).send({ msg: "Error del servidor" });
+      } else if (!check) {
+        res.status(400).send({ msg: "Contraseña incorrecta" });
+      } else {
+        res.status(200).send({
+          access: jwt.createAccessToken(userStorage),
+          refresh: jwt.createRefreshToken(userStorage),
+        });
+      }
+    });
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
 }
 
 function refreshAccessToken(req, res) {
