@@ -2,17 +2,9 @@
 
 [_Curso de Udemy_](https://www.udemy.com/course/crea-tu-propia-app-mensajeria-desde-cero/?couponCode=KEEPLEARNING)
 
-## Lado servidor
+## Lado cliente
 
-Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp/tree/main) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
-
-### create-expo-app
-
-La versión que se usa en el curso claramente no es la última (3.2.0 al escribir este readme). A tal punto que la última usa Typescript en vez de Javascript. Por eso el comando utlizado para la instalación en mi caso fue:
-
-```
-npx create-expo-app@2.3.0 server
-```
+Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
 
 ### Cómo correr el servidor
 
@@ -22,7 +14,7 @@ Una vez clonado localmente con:
 git clone https://github.com/aghmnl/chatapp-server.git
 ```
 
-Para correr el servidor se debe hacer:
+Para correr el servidor se debe hacer dentro de la carpeta recién creada:
 
 ```
 yarn dev
@@ -44,7 +36,6 @@ Ya que el curso no está actualizado, me tomé el esfuerzo de anotar todas las d
 - npm 8.5.5
 - node 18.12.1
 - yarn 1.22.19
-- create-expo-app Creo que usa una versión cercana a la 2.3.0
 - express.js 4.18.2
 - socket.io 4.5.4
 - mongoose 6.8.0
