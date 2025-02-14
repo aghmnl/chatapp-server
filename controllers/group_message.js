@@ -76,7 +76,7 @@ async function getLastMessage(req, res) {
   const { group_id } = req.params;
 
   try {
-    const response = await GroupMessage.findOne({ group: group_id }).sort({ createdAt: -1 }).populate("user");
+    const response = await GroupMessage.findOne({ group: group_id }).sort({ createdAt: -1 }).populate("user", "-password -__v").select("-__v");
 
     res.status(200).send(response || {});
   } catch (error) {
