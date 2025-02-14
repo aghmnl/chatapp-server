@@ -28,10 +28,8 @@ function login(req, res) {
 
   const emailLowerCase = email.toLowerCase();
 
-  User.findOne({ email: emailLowerCase }, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
+  User.findOne({ email: emailLowerCase })
+    .then((userStorage) => {
       bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
         if (bcryptError) {
           res.status(500).send({ msg: "Error del servidor" });
@@ -44,8 +42,10 @@ function login(req, res) {
           });
         }
       });
-    }
-  });
+    })
+    .catch(() => {
+      res.status(500).send({ msg: "Error del servidor" });
+    });
 }
 
 function refreshAccessToken(req, res) {
