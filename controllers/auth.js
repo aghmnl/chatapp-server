@@ -2,7 +2,7 @@ import bscrypt from "bcryptjs";
 import { User } from "../models/index.js";
 import { jwt } from "../utils/index.js";
 
-function register(req, res) {
+async function register(req, res) {
   const { email, password } = req.body;
 
   const user = new User({
@@ -14,41 +14,40 @@ function register(req, res) {
   const hashPassword = bscrypt.hashSync(password, salt);
   user.password = hashPassword;
 
-  user.save((error, userStorage) => {
-    if (error) {
-      res.status(400).send({ msg: "Error al registrar el usuario" });
-    } else {
-      res.status(201).send(userStorage);
-    }
-  });
+  try {
+    const userStorage = await user.save();
+    res.status(201).send(userStorage);
+  } catch (error) {
+    res.status(400).send({ msg: "Error al registrar el usuario" });
+  }
 }
 
-function login(req, res) {
+async function login(req, res) {
   const { email, password } = req.body;
 
   const emailLowerCase = email.toLowerCase();
 
-  User.findOne({ email: emailLowerCase }, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
-      bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
-        if (bcryptError) {
-          res.status(500).send({ msg: "Error del servidor" });
-        } else if (!check) {
-          res.status(400).send({ msg: "Contraseña incorrecta" });
-        } else {
-          res.status(200).send({
-            access: jwt.createAccessToken(userStorage),
-            refresh: jwt.createRefreshToken(userStorage),
-          });
-        }
-      });
-    }
-  });
+  try {
+    const userStorage = await User.findOne({ email: emailLowerCase });
+
+    bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
+      if (bcryptError) {
+        res.status(500).send({ msg: "Error del servidor" });
+      } else if (!check) {
+        res.status(400).send({ msg: "Contraseña incorrecta" });
+      } else {
+        res.status(200).send({
+          access: jwt.createAccessToken(userStorage),
+          refresh: jwt.createRefreshToken(userStorage),
+        });
+      }
+    });
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
 }
 
-function refreshAccessToken(req, res) {
+async function refreshAccessToken(req, res) {
   const { refreshToken } = req.body;
 
   if (!refreshToken) {
@@ -63,15 +62,12 @@ function refreshAccessToken(req, res) {
 
   const { user_id } = jwt.decoded(refreshToken);
 
-  User.findById(user_id, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
-      res.status(200).send({
-        accessToken: jwt.createAccessToken(userStorage),
-      });
-    }
-  });
+  try {
+    const userStorage = await User.findById(user_id);
+    res.status(200).send({ accessToken: jwt.createAccessToken(userStorage) });
+  } catch (error) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
 }
 
 export const AuthController = { register, login, refreshAccessToken };
