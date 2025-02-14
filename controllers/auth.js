@@ -14,13 +14,14 @@ function register(req, res) {
   const hashPassword = bscrypt.hashSync(password, salt);
   user.password = hashPassword;
 
-  user.save((error, userStorage) => {
-    if (error) {
-      res.status(400).send({ msg: "Error al registrar el usuario" });
-    } else {
+  user
+    .save()
+    .then((userStorage) => {
       res.status(201).send(userStorage);
-    }
-  });
+    })
+    .catch(() => {
+      res.status(400).send({ msg: "Error al registrar el usuario" });
+    });
 }
 
 function login(req, res) {
@@ -28,10 +29,8 @@ function login(req, res) {
 
   const emailLowerCase = email.toLowerCase();
 
-  User.findOne({ email: emailLowerCase }, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
+  User.findOne({ email: emailLowerCase })
+    .then((userStorage) => {
       bscrypt.compare(password, userStorage.password, (bcryptError, check) => {
         if (bcryptError) {
           res.status(500).send({ msg: "Error del servidor" });
@@ -44,8 +43,10 @@ function login(req, res) {
           });
         }
       });
-    }
-  });
+    })
+    .catch(() => {
+      res.status(500).send({ msg: "Error del servidor" });
+    });
 }
 
 function refreshAccessToken(req, res) {
@@ -63,15 +64,15 @@ function refreshAccessToken(req, res) {
 
   const { user_id } = jwt.decoded(refreshToken);
 
-  User.findById(user_id, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
+  User.findById(user_id)
+    .then((userStorage) => {
       res.status(200).send({
         accessToken: jwt.createAccessToken(userStorage),
       });
-    }
-  });
+    })
+    .catch(() => {
+      res.status(500).send({ msg: "Error del servidor" });
+    });
 }
 
 export const AuthController = { register, login, refreshAccessToken };
