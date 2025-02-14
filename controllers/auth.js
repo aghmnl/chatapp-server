@@ -64,15 +64,15 @@ function refreshAccessToken(req, res) {
 
   const { user_id } = jwt.decoded(refreshToken);
 
-  User.findById(user_id, (error, userStorage) => {
-    if (error) {
-      res.status(500).send({ msg: "Error del servidor" });
-    } else {
+  User.findById(user_id)
+    .then((userStorage) => {
       res.status(200).send({
         accessToken: jwt.createAccessToken(userStorage),
       });
-    }
-  });
+    })
+    .catch(() => {
+      res.status(500).send({ msg: "Error del servidor" });
+    });
 }
 
 export const AuthController = { register, login, refreshAccessToken };
