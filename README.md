@@ -2,6 +2,8 @@
 
 [_Curso de Udemy_](https://www.udemy.com/course/crea-tu-propia-app-mensajeria-desde-cero/?couponCode=KEEPLEARNING)
 
+Este repositorio comprende hasta capítulo 63. Cada commit se corresponde a un capítulo en específico, pudiendo haber excepciones. Para los capítulos posteriores, que corresponden al lado cliente, ir a este repositorio: [chatapp-client](https://github.com/aghmnl/chatapp-client)
+
 ## Lado cliente
 
 Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
