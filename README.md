@@ -4,19 +4,25 @@
 
 Este repositorio comprende hasta capítulo 63. Cada commit se corresponde a un capítulo en específico, pudiendo haber excepciones. Para los capítulos posteriores, que corresponden al lado cliente, ir a este repositorio: [chatapp-client](https://github.com/aghmnl/chatapp-client)
 
-## Lado cliente
+## Lado servidor
 
 Éste es el código del curso tal como fue dado con muy pequeños cambios. Como el repositorio está disponible de forma pública, hago lo mismo con este repositorio. El código original se encuentra en [node-express-sockets-whatsapp](https://github.com/xAgustin93/node-express-sockets-whatsapp) y fue creado por [Agustín Navarro Galdón](https://www.linkedin.com/in/agustin93/)
 
 ### Cómo correr el servidor
 
-Una vez clonado localmente con:
+Para clonar localmente el repositorio:
 
 ```
 git clone https://github.com/aghmnl/chatapp-server.git
 ```
 
-Para correr el servidor se debe hacer dentro de la carpeta recién creada:
+Para instalar el código correctamente ir a la carpeta recién creada:
+
+```
+yarn install
+```
+
+Para correr el servidor:
 
 ```
 yarn dev
